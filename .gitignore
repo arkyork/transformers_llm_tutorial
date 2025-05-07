@@ -1,2 +1,4 @@
 scripts/trainer_output
 scripts/shiritori-model
+scripts/language-bert-model
+scripts/bert-classification-language
