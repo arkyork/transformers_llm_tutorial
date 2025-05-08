@@ -4,4 +4,6 @@ scripts/language-bert-model
 scripts/bert-classification-language
 scripts/lm-evaluation-harness
 scripts/shiritori-qwen-model
+scripts/shiritori-gemma-model
+
 results

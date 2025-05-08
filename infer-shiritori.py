@@ -7,7 +7,8 @@ from transformers import set_seed
 
 MODEL_DIR = "./scripts/shiritori-qwen-model"
 
-MODEL_DIR = "google/gemma-3-1b-it"
+#MODEL_DIR = "google/gemma-3-1b-it"
+#MODEL_DIR = "./scripts/shiritori-gemma-model"
 
 model = AutoModelForCausalLM.from_pretrained(
             MODEL_DIR,
