@@ -5,15 +5,15 @@ from transformers import AutoTokenizer,AutoModelForCausalLM,pipeline
 from transformers import set_seed
 
 
-MODEL_DIR = "./scripts/shiritori-qwen-model"
-
-#MODEL_DIR = "google/gemma-3-1b-it"
+#MODEL_DIR = "./scripts/shiritori-qwen-model"
 #MODEL_DIR = "./scripts/shiritori-gemma-model"
+
+MODEL_DIR = "google/gemma-3-1b-it"
 
 model = AutoModelForCausalLM.from_pretrained(
             MODEL_DIR,
-            torch_dtype=torch.float16,     # fp16 推論
-            device_map="auto"
+            device_map="auto",
+            attn_implementation="eager"
         )
 
 tokenizer   = AutoTokenizer.from_pretrained(MODEL_DIR)
@@ -27,15 +27,14 @@ def get_answer(prev_word: str) -> str:
 # 推論
 
     messages = [
-        {"role": "system", "content": "あなたは「しりとり」アシスタントです。「→」で渡された単語でしりとりをして。"},
+        {"role": "system", "content": "あなたは「しりとり」が得意です。「→」で渡された単語でしりとりをして。"},
         {"role": "user",   "content": prev_word+" → "}
     ]
     
     set_seed(144)
 
     result = generator(prev_word+" → ", 
-                        max_new_tokens=8,
-                        do_sample=True)
+                        max_new_tokens=24)
     try:
         return result[0]["generated_text"][2]["content"]
     except:
@@ -44,5 +43,5 @@ def get_answer(prev_word: str) -> str:
 
 
 if __name__ == "__main__":
-    word = sys.argv[1] if len(sys.argv) > 1 else "りんご"
+    word = sys.argv[1] if len(sys.argv) > 1 else "ぎんこう"
     print(get_answer(word))
